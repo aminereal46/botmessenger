@@ -54,6 +54,10 @@ app.post('/webhook', (req, res) => {
       }
     });
 
+    function receivedMessage(event){
+      console.log(event.message);
+    }
+
     // Returns a '200 OK' response to all requests
     res.status(200).send('EVENT_RECEIVED');
   } else {

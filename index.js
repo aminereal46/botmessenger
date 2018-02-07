@@ -104,7 +104,7 @@ function sendTextMessage(recipientId , messageText){
 }
 
 function callSendApi(messageData){
-
+  console.log("arrived here")
    request({
      uri: "https://graph.facebook.com/v2.6/me/messages",
      qs: { "access_token": "EAACHkOkaZCMkBAIcBedn6cZANTlTmkONLLP6tcn47ZB9TGygaZBZAQVfcfQtTHf8BVry7g0aW2QDHwkt1jPxW883QZA8fZCELTMVzJ2JMtwvFJMl7jDXyZAYh3rxdZBslTHprdGytT8sWWZA4pht9AUnabnWyZBRcl3KmGVPq9DiKZAiCbU2J9tXEi1l" },

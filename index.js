@@ -55,8 +55,60 @@ app.post('/webhook', (req, res) => {
     });
 
     function receivedMessage(event){
-      console.log(event.message);
+      var senderId = event.sender.id;
+      var recipientId = event.recipient.id;
+      var timeOfMessage = event.timestap;
+      var message = event.message;
+      var messageId=message.mid;
+      var messageText = message.text;
+      var messageAttachmens = message.attachments;
+
+      if(messageText){
+        switch(messageText){
+          case 'generic':
+            sendGenericMessage(senderId);
+            break;
+          default:
+            sendTextMessage(senderId , messageText);
+        }
+      }
+      else if(messageAttachments){
+          sendTextMessage(senderId , "Message with attachments received");
+      }
     }
+
+    fucntion sendFenericMessage(recipientId, messageText){
+
+    }
+
+    function sendTextMessage(recipientId , messageText){
+      var messageData={
+        recipient:{
+          id: recipientId
+        },
+        message:{
+          text:messageText
+        }
+      };
+      callSendApi(messageData);
+    }
+
+    function callSendApi(messageData){
+
+       request({
+         "uri": "https://graph.facebook.com/v2.6/me/messages",
+         "qs": { "access_token": "EAACHkOkaZCMkBAIcBedn6cZANTlTmkONLLP6tcn47ZB9TGygaZBZAQVfcfQtTHf8BVry7g0aW2QDHwkt1jPxW883QZA8fZCELTMVzJ2JMtwvFJMl7jDXyZAYh3rxdZBslTHprdGytT8sWWZA4pht9AUnabnWyZBRcl3KmGVPq9DiKZAiCbU2J9tXEi1l" },
+         "method": "POST",
+         "json": messagesData
+       }, (err, res, body) => {
+         if (!err) {
+           console.log('message sent!')
+         } else {
+           console.error("Unable to send message:" + err);
+         }
+       });
+    }
+
 
     // Returns a '200 OK' response to all requests
     res.status(200).send('EVENT_RECEIVED');
